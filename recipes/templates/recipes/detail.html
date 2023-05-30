@@ -1,22 +1,31 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vegetarian Tacos</title>
-    <link rel="stylesheet" href="{% static "css/recipes.css" %}">
-</head>
-<body>
+{% extends 'base.html' %}
+
+    {% block title %}
+    <title>{{ recipe_object.title }} - Scrumptious Recipes</title>
+    {% endblock title %}
+
+ {% block content %}
+    <header>
+        <nav>
+            <a class="nav_hover" href="{% url 'recipe_list' %}">Main Page</a>
+            <a class="nav_hover" href="{% url 'edit_recipe' recipe_object.id %}">Edit recipe</a>
+      </nav>
+    </header>
+    
+
+   
    <main>
-    <h1>Vegeterian Tacos</h1>
+    <h1>{{ recipe_object.title }}</h1>
+
     <div class="grid-container">
-    <div class="image_and_rating">
-    <img src="https://mks.io/public-tacos ">
-    <div>4.3 stars</div>
-    </div>
-    <div class="content">
+
+   <div class="image_and_rating">
+    <img src="{{ recipe_object.picture }}">
+    {{ recipe_object.rating }} stars</div>
+
+    <div class="description"><p>{{ recipe_object.description }}</p></div>
+ 
+    <div class="ingredients">
     <h2>Ingredients</h2>
     <table>
         <thead>
@@ -26,40 +35,25 @@
             </tr>
         </thead>
         <tbody>
+            {% for ingredient in recipe_object.ingredients.all %}
             <tr>
-                <td>1 cup</td>
-                <td>Green beans</td>
+               <td>{{ ingredient.amount }}</td>
+               <td>{{ ingredient.food_item }}</td>
             </tr>
-            <tr>
-                <td>3 ears</td>
-                <td>Fresh corn</td>
-            </tr>
-            <tr>
-                <td>2 cups</td>
-                <td>Tomatillo salsa</td>
-            </tr>
-            <tr>
-                <td>8</td>
-                <td>Corn tortillas</td>
-            </tr>
-            <tr>
-                <td>0.5 cups</td>
-                <td>Cotija cheese</td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
+</div>
+   
+<div class="step">
     <h2 >Steps</h2>
     <ol>
-        <li>Blanch the green beans</li>
-        <li>Grill the green beans and the ears of corn</li>
-        <li>Chop the green beans</li>
-        <li>Slice the corn off the cob</li>
-        <li>Grill the tortillas</li>
-        <li>Assemble the tacos with veggies, salsa, and cheese</li>
+        {% for step in recipe_object.steps.all %}
+        <li>{{ step.instruction }}</li>
+        {% endfor %}
     </ol>
+</div>
+
     </div>
    </main> 
-   <footer class="footer">Made with love by Scrumptious Recipes</footer>
-</div>
-</body>
-</html>
+{% endblock content %}

@@ -1,68 +1,41 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scrumptious</title>
-    <link rel="stylesheet" href="{% static "css/recipes.css" %}">
+{% extends 'base.html' %}
 
-</head>
-<body>
-    <header>
-        <nav>
-            <div><a class="nav_hover" href="list.html">Main</a></div>
-      </nav>
-    </header>
+    {% block title %}
+    <title>{{ recipe_object.title }} - Scrumptious</title>
+    {% endblock title %}
+
+ {% block content %}
+<header>
+    <nav>
+        {% if user.is_authenticated %}
+        Hello, {{ user.username }}
+        <a class="nav_hover" href="{% url 'user_logout' %}">Logout</a>
+        <a class="nav_hover" href="{% url 'create_recipe' %}">Create a recipe</a>
+        <a class="nav_hover" href="{% url 'my_recipe_list' %}">My recipes</a>
+        {% else %}
+            <a class="nav_hover" href="{% url 'signup' %}">Sign up</a>
+            <a class="nav_hover" href="{% url 'user_login' %}">Login</a>
+            {% endif %}
+
+    </nav>
+</header>
+
+   
+  
     <main>
         <h1>Scrumptious Recipes</h1>
         <h2 id="center">All the food that's fit to eat</h2>
         <div id="grid_list_taco">
+            {% for recipe in recipe_list %}
             <div>
             <h3>
-                <a href="details.html">Vegetarian Tacos</a>
+                <a href="{% url 'show_recipe' recipe.id %}">{{ recipe.title }}</a>
             </h3>
-                <img src="https://mks.io/public-tacos" alt="Taco picture">
+                <img id="list_img" src="{{ recipe.picture }}">
                 <div>4.3 stars</div>
+                <p>{{ recipe.created_on|date:"F d Y" }}</p>
                 </div>
-                <div>
-                    <h3>
-                        <a href="details.html">Japanese curry</a>
-                    </h3>
-                    <img src="https://mks.io/public-tacos" alt="Taco picture">
-                        <div>4.3 stars</div>
-                        </div>
-                        <div>
-                            <h3>
-                                <a href="details.html">Vegetarian Tacos</a>
-                            </h3>
-                                <img src="https://mks.io/public-tacos" alt="Taco picture">
-                                <div>4.3 stars</div>
-                                </div>
-                                <div>
-                                    <h3>
-                                        <a href="details.html">Vegetarian Tacos</a>
-                                    </h3>
-                                        <img src="https://mks.io/public-tacos" alt="Taco picture">
-                                        <div>4.3 stars</div>
-                                        </div>
-                                        <div>
-                                            <h3>
-                                                <a href="details.html">Vegetarian Tacos</a>
-                                            </h3>
-                                                <img src="https://mks.io/public-tacos" alt="Taco picture">
-                                                <div>4.3 stars</div>
-                                                </div><div>
-                                                    <h3>
-                                                        <a href="details.html">Vegetarian Tacos</a>
-                                                    </h3>
-                                                        <img src="https://mks.io/public-tacos" alt="Taco picture">
-                                                        <div>4.3 stars</div>
-                                                        </div>
-        </div>
+            {% endfor %}    
     </div>
     </main>
-    <footer>Made with love by Scrumptious Recipes</footer>
-</body>
-</html>
+    {% endblock content %}

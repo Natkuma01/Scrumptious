@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Sign Up! - Scrumptious Recipes</title>
+{% endblock title %}
+
+{% block content %}
+<header>
+    <nav>
+        <a class="nav_hover" href="{% url 'recipe_list' %}">Main page</a>
+    </nav>
+</head>
+<main>
+    <h1>Sign up</h1>
+    <div class="box-for-forms">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button>Sign up</button>
+    </form>
+</div>
+</main>
+{% endblock content %}
