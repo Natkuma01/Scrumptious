@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-3+7o7g0n442lwt-$g0h@6qv7a0@d95($71oxvm@a%xn#a5)jjm"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['scrumptious-7nio.onrender.com']
 
